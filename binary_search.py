@@ -1,4 +1,6 @@
 # to prove that binary search is faster than naive (one-at-a-time) search
+import random
+import time
 
 def naive_search(l,target):
     for i in range(len(l)): #ie, every index
@@ -29,3 +31,30 @@ if __name__ =='__main__':
     target = 10
     print(naive_search(l, target))
     print(binary_search(l, target))
+
+    length = 1000
+    # build a sorted list of length 10000
+    sorted_list = set()
+    while len(sorted_list) < length:
+        sorted_list.add(random.randint(-3*length, 3*length))
+        # to give us a wide range of numbers to randomly add
+    sorted_list = sorted(list(sorted_list)) 
+    # IOW, sort the list named 'sorted_list'.
+
+    # fascinating--we can time how long the sorting process will take and compare both methods:
+
+    start = time.time()  # the time right now. 
+    for target in sorted_list:
+        naive_search(sorted_list, target) # you turn every item into a target (each separate time, it seems)
+    end = time.time()
+    print("Naive search time: ", (end - start)/length, "seconds")
+    # if divided by length, it's per iteration.
+
+    start = time.time()  # the time right now. 
+    for target in sorted_list:
+        binary_search(sorted_list, target) # you turn every item into a target (each separate time, it seems)
+    end = time.time()
+    print("Binary search time: ", (end - start)/length, "seconds")
+    # if divided by length, it give an average length of each iteration.
+
+  
