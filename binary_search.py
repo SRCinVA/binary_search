@@ -12,14 +12,20 @@ def binary_search(l, target, low=None, high=None):  # the lowest and highest ind
     if low is None:
         low = 0  # ... so that it is the lowest possible index we could check
     if high is None:
-        high = len(l) - 1  # ... here, obviously the highest possible index (that's why it's - 1)
+        high = len(l) - 1  # ... here, the highest possible index (that's why it's - 1)
+    if high < low:
+        return -1  # this means that the target just isn't in the list at all
 
     midpoint = (low + high) // 2 # add up lowest and highest indices and divide by 2
     if l[midpoint] == target:
         return midpoint
     elif target < l[midpoint]:
-        return binary_search(l, search, low, midpoint-1)  # you recursively chop it in half and try it again
+        return binary_search(l, target, low, midpoint-1)  # recursively cut it in half and try it again, taking away one from the midpoint
     else: # meaning, target > l[midpoint]
-        return binary_search(l,search, midpoint+1, high)
+        return binary_search(l, target, midpoint+1, high) # ... adding one to the midpoint if the target is greater than the midpoint
 
-
+if __name__ =='__main__':
+    l = [1, 3, 5, 10, 12]
+    target = 10
+    print(naive_search(l, target))
+    print(binary_search(l, target))
